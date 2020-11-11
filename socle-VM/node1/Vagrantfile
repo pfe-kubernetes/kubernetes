@@ -1,6 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+export VAGRANT_EXPERIMENTAL="disks"
+
 Vagrant.configure("2") do |config|
     # Machine Routage
     config.vm.define "node1" do |machine|
