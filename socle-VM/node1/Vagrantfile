@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
         # Désactive la synchronisation rsync
         machine.vm.synced_folder '.', '/vagrant', disabled: true
         machine.vm.network :public_network, bridge: "eno1", ip: "192.168.4.235", netmask: "255.255.255.0"
+        # Necessite vagrant plugin install vagrant-disksize
         machine.disksize.size = '50GB'
         machine.vm.provider :virtualbox do |v|
             v.customize ["modifyvm", :id, "--name", "node1"]
