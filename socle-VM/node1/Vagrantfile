@@ -1,0 +1,21 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    # Machine Routage
+    config.vm.define "node1" do |machine|
+        machine.vm.hostname = "node1"
+        # Box de base (agent de supervision, tests, sécurité, ...)
+        machine.vm.box = "ubuntu/focal64"
+        # Désactive la synchronisation rsync
+        machine.vm.synced_folder '.', '/vagrant', disabled: true
+        machine.vm.network :public_network, bridge: "eno1", ip: "192.168.4.235", netmask: "255.255.255.0"
+        machine.disksize.size = '50GB'
+        machine.vm.provider :virtualbox do |v|
+            v.customize ["modifyvm", :id, "--name", "node1"]
+            v.customize ["modifyvm", :id, "--groups", "/pfe-kubernetes"]
+            v.customize ["modifyvm", :id, "--cpus", "6"]
+            v.customize ["modifyvm", :id, "--memory", 12288]
+        end
+    end
+end
