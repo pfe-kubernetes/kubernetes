@@ -29,7 +29,7 @@
       EOF
 
   - name: Ajout des clés GPG des repos
-    apt-key: 
+    apt_key: 
       url: "{{item}}"
     loop:
       - "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{crio.os}}/Release.key"
