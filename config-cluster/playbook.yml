@@ -48,11 +48,11 @@
   - name: Installation cri-o et binaires kubernetes
     apt:
       name:
-        - cri-o={{crio.version}}
-        - cri-o-runc={{crio.version}}
-        - kubelet={{kubelet.version}}
-        - kubeadm={{kubelet.version}}
-        - kubectl={{kubelet.version}}
+        - cri-o #={{crio.version}}
+        - cri-o-runc #={{crio.version}}
+        - kubelet #={{kubelet.version}}
+        - kubeadm #={{kubelet.version}}
+        - kubectl #={{kubelet.version}}
       state: present
 
   - name: Marquage des paquets pour les binaires kubernetes
