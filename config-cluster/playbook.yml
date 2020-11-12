@@ -41,8 +41,8 @@
       repo: "{{item}}"
       state: present
     loop:
-      - "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{crio.os}}/"
-      - "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{crio.version}}/{{crio.os}}/"
+      - "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{crio.os}}/ /"
+      - "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{crio.version}}/{{crio.os}}/ /"
       - "deb https://apt.kubernetes.io/ kubernetes-xenial main "
 
   - name: Installation cri-o et binaires kubernetes
