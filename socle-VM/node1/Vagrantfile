@@ -20,7 +20,6 @@ Vagrant.configure("2") do |config|
         end
 
         machine.vm.provision "shell", inline: <<-SHELL
-        PasswordAuthentication no    
             sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
             sleep 3
             service ssh restart
