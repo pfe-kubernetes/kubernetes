@@ -27,8 +27,4 @@ Vagrant.configure("2") do |config|
             netplan apply
         SHELL
     end
-    # Provisioning
- #   config.vm.provision :ansible do |ansible|
-  #      ansible.playbook = "provisioning/playbook.yml"
-   # end
 end
