@@ -66,19 +66,19 @@
 
   - name: Configuration de kubelet
       command: |
-      cat <<EOF >/var/lib/kubelet/config.yaml
-      apiVersion: kubeadm.k8s.io/v1beta2
-      kind: InitConfiguration
-      nodeRegistration:
-        criSocket: "/var/run/crio/crio.sock"
-      --
-      apiVersion: kubeadm.k8s.io/v1beta2
-      kind: JoinConfiguration
-      nodeRegistration:
-        criSocket: "/var/run/crio/crio.sock"
-      ---
-      apiVersion: kubelet.config.k8s.io/v1beta1
-      kind: KubeletConfiguration
-      featureGates: AllAlpha=false,RunAsGroup=true
-      cgroupDriver: systemd
-      EOF
+        cat <<EOF >/var/lib/kubelet/config.yaml
+        apiVersion: kubeadm.k8s.io/v1beta2
+        kind: InitConfiguration
+        nodeRegistration:
+          criSocket: "/var/run/crio/crio.sock"
+        --
+        apiVersion: kubeadm.k8s.io/v1beta2
+        kind: JoinConfiguration
+        nodeRegistration:
+          criSocket: "/var/run/crio/crio.sock"
+        ---
+        apiVersion: kubelet.config.k8s.io/v1beta1
+        kind: KubeletConfiguration
+        featureGates: AllAlpha=false,RunAsGroup=true
+        cgroupDriver: systemd
+        EOF
