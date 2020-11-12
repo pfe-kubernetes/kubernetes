@@ -66,6 +66,7 @@
 
   - name: Configuration de kubelet
     shell: |
+      mkdir /var/lib/kubelet
       cat <<EOF >/var/lib/kubelet/config.yaml
       apiVersion: kubeadm.k8s.io/v1beta2
       kind: InitConfiguration
