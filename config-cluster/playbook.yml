@@ -20,7 +20,7 @@
       br_netfilter
       EOF
       modprobe overlay
-      modprobe br_netfliter
+      modprobe br_netfilter
 
   - name: Configuration paramètre systemctl
     shell: | 
