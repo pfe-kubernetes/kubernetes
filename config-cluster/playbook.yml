@@ -83,3 +83,20 @@
       featureGates: AllAlpha=false,RunAsGroup=true
       cgroupDriver: systemd
       EOF
+
+  - name: Start crio 
+    service:
+      name: crio
+      state: started
+      enabled: yes
+
+  - name: Autoriser le démarrage au boot de kubelet
+    service:
+      name: kubelet
+      enabled: yes
+
+  - name: Relancer les règles de sysctl.conf
+    command: sysctl --system
+# sudo systemctl restart systemd-modules-load.service
+# sysctl --system
+# systemctl start crio
