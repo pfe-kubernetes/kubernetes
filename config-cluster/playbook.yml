@@ -87,7 +87,7 @@
   #     EOF
   
   - name: Config kubelet extra args
-    shell: echo -e "KUBELET_EXTRA_ARGS=--feature-gates="AllAlpha=false,RunAsGroup=true" --container-runtime=remote --cgroup-driver=systemd --container-runtime-endpoint='unix:///var/run/crio/crio.sock' --runtime-request-timeout=5m" | /etc/default/kubelet
+    shell: echo -e "KUBELET_EXTRA_ARGS=--feature-gates="AllAlpha=false,RunAsGroup=true" --container-runtime=remote --cgroup-driver=systemd --container-runtime-endpoint='unix:///var/run/crio/crio.sock' --runtime-request-timeout=5m" > /etc/default/kubelet
 
   - name: Start crio 
     service:
