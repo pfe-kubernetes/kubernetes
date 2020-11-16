@@ -121,9 +121,18 @@
     shell: kubeadm init --config /root/kubeadm.yaml
     register: kubeadm_out
 
+  - name:
+    debug:
+      var: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
+
+  - name:
+    set_fact: 
+      kubeadm_join: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
+
+  
   - name: attente pour init
     pause: 
-      seconds: 60
+      seconds: 20
 
 - hosts: workers
   remote_user: k8s
@@ -131,15 +140,10 @@
   vars_files:
     - vars.yml
 
+- name:
+    debug:
+      var: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
+      
   tasks:
-
-  - name:
-    debug:
-      var: kubeadm_out.stdout
-
-  - name:
-    debug:
-      var: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
-  
   - name: kubeadm join
-    shell: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
+    shell: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
