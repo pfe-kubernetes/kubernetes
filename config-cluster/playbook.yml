@@ -119,7 +119,7 @@
 
   - name: kubeadm init
     shell: kubeadm init --config /root/kubeadm.yaml
-      register: kubeadm_out
+    register: kubeadm_out
 
   - name: attente pour init
     pause: 
