@@ -123,11 +123,11 @@
 
   - name:
     debug:
-      var: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
+      msg: "{{ kubeadm_out.stdout | regex_search('^kubeadm join .+$', multiline=True) }}"
 
   - name:
     set_fact: 
-      kubeadm_join: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
+      kubeadm_join: "{{ kubeadm_out.stdout | regex_search('^kubeadm join .+$', multiline=True) }}"
 
   
   - name: attente pour init
@@ -143,7 +143,7 @@
   tasks:
   - name:
     debug:
-      var: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
+      msg: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
 
   - name: kubeadm join
     shell: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
