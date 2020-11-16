@@ -139,7 +139,7 @@
 
   - name:
     debug:
-      var: {{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}
+      var: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
   
   - name: kubeadm join
-    shell: {{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}
+    shell: "{{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}"
