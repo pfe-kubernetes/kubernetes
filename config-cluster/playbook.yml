@@ -86,8 +86,8 @@
   #     cgroupDriver: systemd
   #     EOF
   
-  - name: Config kubelet extra args
-    shell: echo -e "KUBELET_EXTRA_ARGS=--feature-gates="AllAlpha=false,RunAsGroup=true" --container-runtime=remote --cgroup-driver=systemd --container-runtime-endpoint='unix:///var/run/crio/crio.sock' --runtime-request-timeout=5m" > /etc/default/kubelet
+#  - name: Config kubelet extra args
+ #   shell: echo -e "KUBELET_EXTRA_ARGS=--feature-gates="AllAlpha=false,RunAsGroup=true" --container-runtime=remote --cgroup-driver=systemd --container-runtime-endpoint='unix:///var/run/crio/crio.sock' --runtime-request-timeout=5m" > /etc/default/kubelet
 
   - name: Start crio 
     service:
@@ -102,5 +102,44 @@
 
   - name: Relancer les règles de sysctl.conf
     command: sysctl --system
-# sudo systemctl restart systemd-modules-load.service
 
+- hosts: master
+  remote_user: k8s
+  become: yes
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - name: config kubelet 
+    template: 
+        src: templates/kubeadm.yaml 
+        dest: /root/kubeadm.yaml 
+        group: root
+        mode: "0644"
+
+  - name: kubeadm init
+    shell: kubeadm init --config /root/kubeadm.yaml
+      register: kubeadm_out
+
+  - name: attente pour init
+    pause: 
+      seconds: 60
+
+- hosts: workers
+  remote_user: k8s
+  become: yes
+  vars_files:
+    - vars.yml
+
+  tasks:
+
+  - name:
+    debug:
+      var: kubeadm_out.stdout
+
+  - name:
+    debug:
+      var: {{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}
+  
+  - name: kubeadm join
+    shell: {{ kubeadm_out.stdout | regex_search('^kubeadm join ', multiline=True) }}
