@@ -127,7 +127,7 @@
 
   - name:
     set_fact: 
-      kubeadm_join: "{{ kubeadm_join[-2][:-2]+kubeadm_join[-1] }}"
+      kubeadm_join: "{{ kubeadm_out[-2][:-2]+kubeadm_out[-1] }}"
 
   
   - name: attente pour init
