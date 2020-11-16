@@ -139,11 +139,11 @@
   become: yes
   vars_files:
     - vars.yml
-
-- name:
-    debug:
-      var: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
       
   tasks:
+  - name:
+    debug:
+      var: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
+
   - name: kubeadm join
     shell: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
