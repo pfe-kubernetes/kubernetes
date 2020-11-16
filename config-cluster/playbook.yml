@@ -126,16 +126,8 @@
       var: kubeadm_out
 
   - name:
-    debug:
-      var: kubeadm_out.stdout
-
-  - name:
-    debug:
-      msg: "{{ kubeadm_out.stdout | regex_search('^kubeadm join .+$', multiline=True) }}"
-
-  - name:
     set_fact: 
-      kubeadm_join: "{{ kubeadm_out.stdout | regex_search('^kubeadm join .+$', multiline=True) }}"
+      kubeadm_join: "{{ kubeadm_join[-2][:-2]+kubeadm_join[-1] }}"
 
   
   - name: attente pour init
