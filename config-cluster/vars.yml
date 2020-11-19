@@ -1,0 +1,6 @@
+crio: 
+  os: xUbuntu_20.04
+  version: 1.19
+
+kubelet:
+  version: 1.19

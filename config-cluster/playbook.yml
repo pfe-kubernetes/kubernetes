@@ -1,0 +1,149 @@
+---
+- hosts: all
+  remote_user: k8s
+  become: yes
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - name: Installation paquets de base
+    apt:
+      name:
+        - apt-transport-https
+        - curl
+      state: latest
+
+  - name: Commande modprobe
+    shell: | 
+      cat <<EOF | sudo tee /etc/modules
+      overlay
+      br_netfilter
+      EOF
+      modprobe overlay
+      modprobe br_netfilter
+
+  - name: Configuration paramètre systemctl
+    shell: | 
+      cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+      net.bridge.bridge-nf-call-iptables  = 1
+      net.ipv4.ip_forward                 = 1
+      net.bridge.bridge-nf-call-ip6tables = 1
+      EOF
+
+  - name: Ajout des clés GPG des repos
+    apt_key: 
+      url: "{{item}}"
+    loop:
+      - "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{crio.os}}/Release.key"
+      - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{crio.version}}/{{crio.os}}/Release.key"
+      - "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+
+  - name: Installation repository
+    apt_repository:
+      repo: "{{item}}"
+      state: present
+    loop:
+      - "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{crio.os}}/ /"
+      - "deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{crio.version}}/{{crio.os}}/ /"
+      - "deb https://apt.kubernetes.io/ kubernetes-xenial main "
+
+  - name: Installation cri-o et binaires kubernetes
+    apt:
+      name:
+        - cri-o #={{crio.version}}
+        - cri-o-runc #={{crio.version}}
+        - kubelet #={{kubelet.version}}
+        - kubeadm #={{kubelet.version}}
+        - kubectl #={{kubelet.version}}
+      state: present
+
+  - name: Marquage des paquets pour les binaires kubernetes
+    dpkg_selections:
+      name: "{{item}}"
+      selection: hold
+    loop:
+      - kubeadm
+      - kubelet
+      - kubectl
+
+  # - name: Configuration de kubelet
+  #   shell: |
+  #     mkdir /var/lib/kubelet
+  #     cat <<EOF >/var/lib/kubelet/config.yaml
+  #     apiVersion: kubeadm.k8s.io/v1beta2
+  #     kind: InitConfiguration
+  #     nodeRegistration:
+  #       criSocket: "/var/run/crio/crio.sock"
+  #     --
+  #     apiVersion: kubeadm.k8s.io/v1beta2
+  #     kind: JoinConfiguration
+  #     nodeRegistration:
+  #       criSocket: "/var/run/crio/crio.sock"
+  #     ---
+  #     apiVersion: kubelet.config.k8s.io/v1beta1
+  #     kind: KubeletConfiguration
+  #     featureGates: AllAlpha=false,RunAsGroup=true
+  #     cgroupDriver: systemd
+  #     EOF
+  
+#  - name: Config kubelet extra args
+ #   shell: echo -e "KUBELET_EXTRA_ARGS=--feature-gates="AllAlpha=false,RunAsGroup=true" --container-runtime=remote --cgroup-driver=systemd --container-runtime-endpoint='unix:///var/run/crio/crio.sock' --runtime-request-timeout=5m" > /etc/default/kubelet
+
+  - name: Start crio 
+    service:
+      name: crio
+      state: started
+      enabled: yes
+
+  - name: Autoriser le démarrage au boot de kubelet
+    service:
+      name: kubelet
+      enabled: yes
+
+  - name: Relancer les règles de sysctl.conf
+    command: sysctl --system
+
+- hosts: master
+  remote_user: k8s
+  become: yes
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - name: config kubelet 
+    template: 
+        src: templates/kubeadm.yaml 
+        dest: /root/kubeadm.yaml 
+        group: root
+        mode: "0644"
+
+  - name: kubeadm init
+    shell: kubeadm init --config /root/kubeadm.yaml
+    register: kubeadm_out
+
+  - name:
+    debug:
+      var: kubeadm_out
+
+  - name:
+    set_fact: 
+      kubeadm_join: "{{ kubeadm_out.stdout_lines[-2][:-2]+kubeadm_out.stdout_lines[-1] }}"
+
+  
+  - name: attente pour init
+    pause: 
+      seconds: 20
+
+- hosts: workers
+  remote_user: k8s
+  become: yes
+  vars_files:
+    - vars.yml
+      
+  tasks:
+  - name:
+    debug:
+      msg: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
+
+  - name: kubeadm join
+    shell: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
