@@ -110,7 +110,7 @@
     - vars.yml
 
   tasks:
-  - name: config kubelet 
+  - name: Configuration kubelet 
     template: 
         src: templates/kubeadm.yaml 
         dest: /root/kubeadm.yaml 
@@ -121,29 +121,36 @@
     shell: kubeadm init --config /root/kubeadm.yaml
     register: kubeadm_out
 
-  - name:
-    debug:
-      var: kubeadm_out
+  - name: Création du dossier .kube
+    file:
+      path: /root/.kube
+      state: directory
+      user: root
+      group: root
+      mode: "0700"
+  - name: Copie de la config kubectl
+    copy:
+      src: /etc/kubernetes/admin.conf
+      dest: /root/.kube/config
+      user: root
+      group: root
+      mode: "0600"
 
-  - name:
+  - name: Récupération de la commande 'kubeadm join'
     set_fact: 
       kubeadm_join: "{{ kubeadm_out.stdout_lines[-2][:-2]+kubeadm_out.stdout_lines[-1] }}"
 
   
-  - name: attente pour init
+  - name: Petite pause après l'initialisation du cluster...
     pause: 
       seconds: 20
 
 - hosts: workers
+  serial: 1 # Execute le playbook machine par machine
   remote_user: k8s
   become: yes
   vars_files:
     - vars.yml
-      
-  tasks:
-  - name:
-    debug:
-      msg: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
 
   - name: kubeadm join
     shell: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
