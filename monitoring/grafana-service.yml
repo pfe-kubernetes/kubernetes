@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: grafana-service
   namespace: monitoring
+spec:
+  selector:
+    app: grafana
   ports:
   - name: grafui
     nodePort: 30901
