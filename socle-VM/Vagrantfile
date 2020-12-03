@@ -16,9 +16,9 @@ Vagrant.configure("2") do |config|
             v.customize ["modifyvm", :id, "--groups", "/pfe-kubernetes"]
             v.customize ["modifyvm", :id, "--cpus", "6"]
             v.customize ["modifyvm", :id, "--memory", 12288]
-            file_to_disk = "node-storage.vmdk"
+            file_to_disk = "/Data/etudiant/pfe-kubernetes/" + ENV['k8s_hostname'] + "/node-storage.vmdk"
             unless File.exist?(file_to_disk)
-                v.customize [ "createmedium", "disk", "--filename", "node-storage.vmdk", "--format", "vmdk", "--size", 1024 * 30 ]
+                v.customize [ "createmedium", "disk", "--filename", file_to_disk, "--format", "vmdk", "--size", 1024*30 ]
             end
             v.customize [ "storageattach", ENV['k8s_hostname'], "--storagectl", "IDE", "--port", "1", "--device", "0", "--type", "hdd", "--medium", file_to_disk]
         end
