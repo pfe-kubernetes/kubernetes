@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
             unless File.exist?(file_to_disk)
                 v.customize [ "createmedium", "disk", "--filename", file_to_disk, "--format", "vmdk", "--size", 1024*30 ]
             end
-            v.customize [ "storageattach", ENV['k8s_hostname'], "--storagectl", "IDE", "--port", "1", "--device", "0", "--type", "hdd", "--medium", file_to_disk]
+            #v.customize [ "storageattach", ENV['k8s_hostname'], "--storagectl", "IDE", "--port", "1", "--device", "0", "--type", "hdd", "--medium", file_to_disk]
         end
 
         machine.vm.provision "file", source: "provisioning/netplan.yaml", destination: "/tmp/51-kubernetes.yaml"
