@@ -3,6 +3,14 @@ kind: ClusterConfiguration
 networking:
         podSubnet: "10.244.0.0/16"
         serviceSubnet: "10.96.0.0/12"
+apiServer:
+        extraArgs:
+                oidc-client-id: "5e94d87a-0652-4d9c-bc7f-e3c18ca1e57e"
+                oidc-issuer-url: "https://sts.windows.net/4d7ad159-1265-437a-b9f6-2946247d5bf9/"
+                oidc-username-claim: "upn"
+                oidc-username-prefix: "eseo:"
+                oidc-groups-claim: "groups"
+                oidc-groups-prefix: "eseo:"
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
