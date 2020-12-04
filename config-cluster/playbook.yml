@@ -139,7 +139,6 @@
   - name: Récupération de la commande 'kubeadm join'
     set_fact: 
       kubeadm_join: "{{ kubeadm_out.stdout_lines[-2][:-2]+kubeadm_out.stdout_lines[-1] }}"
-
   
   - name: Petite pause après l'initialisation du cluster...
     pause: 
@@ -151,6 +150,6 @@
   become: yes
   vars_files:
     - vars.yml
-
+  tasks:
   - name: kubeadm join
     shell: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
