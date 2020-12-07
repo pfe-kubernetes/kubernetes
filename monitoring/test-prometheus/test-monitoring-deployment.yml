@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-monitoring-deployment
+  namespace: test-monitoring
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-monitoring
+  template:
+    metadata:
+      labels:
+        app: test-monitoring
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: test-busybox
+        image: quay.io/libpod/busybox
+        command: ["sleep", "infinity"]

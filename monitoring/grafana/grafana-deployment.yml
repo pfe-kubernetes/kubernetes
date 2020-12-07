@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: grafana
+      annotations:
+        prometheus.io/scrape: "true"
     spec:
       containers:
         - name: grafana

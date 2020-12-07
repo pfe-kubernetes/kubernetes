@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: prometheus
+      annotations:
+        prometheus.io/scrape: "true"
     spec:
       containers:
       - name: prometheus-cont
