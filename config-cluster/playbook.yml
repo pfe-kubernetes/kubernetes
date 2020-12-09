@@ -144,3 +144,15 @@
   tasks:
     - name: kubeadm join
       shell: "{{ hostvars[groups['master'][0]]['kubeadm_join'] }}"
+
+- hosts: master
+  remote_user: k8s
+  become: yes
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Vérification des noeuds
+      shell: kubectl get nodes
+
+    - name: Ajout des manifests de base (authentification, ...)
+      shell: kubectl apply -f manifests/
