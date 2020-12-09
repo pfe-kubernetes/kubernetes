@@ -1,16 +1,16 @@
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 networking:
-        podSubnet: "10.244.0.0/16"
-        serviceSubnet: "10.96.0.0/12"
+        podSubnet: "{{ kubelet.network.podSubnet }}"
+        serviceSubnet: "{{ kubelet.network.serviceSubnet }}"
 apiServer:
         extraArgs:
-                oidc-client-id: "5e94d87a-0652-4d9c-bc7f-e3c18ca1e57e"
-                oidc-issuer-url: "https://sts.windows.net/4d7ad159-1265-437a-b9f6-2946247d5bf9/"
-                oidc-username-claim: "upn"
-                oidc-username-prefix: "eseo:"
-                oidc-groups-claim: "groups"
-                oidc-groups-prefix: "eseo:"
+                oidc-client-id: "{{ kubelet.auth.oidc-client-id }}"
+                oidc-issuer-url: "{{ kubelet.auth.oidc-issuer-url }}"
+                oidc-username-claim: "{{ kubelet.auth.oidc-username-claim }}"
+                oidc-username-prefix: "{{ kubelet.auth.oidc-username-prefix }}"
+                oidc-groups-claim: "{{ kubelet.auth.oidc-groups-claim }}"
+                oidc-groups-prefix: "{{ kubelet.auth.oidc-groups-prefix }}"
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
