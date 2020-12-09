@@ -17,3 +17,9 @@ kubelet:
     # Liste des groupes dans le token (+préfixe dans les ressources K8S)
     oidc-groups-claim: "groups"
     oidc-groups-prefix: "eseo:"
+
+cilium:
+  namespace: kube-system
+  ipam: kubernetes
+  agent-metrics: true
+  operator-metrics: true

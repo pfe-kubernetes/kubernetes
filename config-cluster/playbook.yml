@@ -112,6 +112,21 @@
         group: root
         mode: "0600"
 
+    - name: Installation de Helm
+      # FixMe: C'est pas top comme méthode d'installation...
+      shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      args:
+        warn: no
+
+    - name: Ajout des repos Helm
+      shell: helm repo add {{ item }}
+      loop:
+        - stable https://charts.helm.sh/stable
+        - cilium https://helm.cilium.io/
+
+    - name: Installation Cilium
+      shell: helm install cilium cilium/cilium -n {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agent-metrics }} --set operator.prometheus.enable={{ cilium.operator-metrics }}
+
     - name: Récupération de la commande 'kubeadm join'
       set_fact:
         kubeadm_join: "{{ kubeadm_out.stdout_lines[-2][:-2]+kubeadm_out.stdout_lines[-1] }}"
