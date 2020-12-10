@@ -19,6 +19,7 @@ metadata:
   labels:
     app: wordpress
 spec:
+  storageClassName: openebs-sc-statefulset
   accessModes:
     - ReadWriteOnce
   resources:
