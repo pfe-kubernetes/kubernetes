@@ -1,14 +1,18 @@
 crio:
+  # Choix de la version CRI-O à installer, voir https://cri-o.io pour choisir les valeurs
+  # La version doit être compatible avec la version de K8s
   version: 1.19
   os: xUbuntu_20.04
 
 kubelet:
+  # Choix de la version K8s
   version: 1.19
+  # Configuration des réseaux attribués à K8s
   network:
     podSubnet: "10.244.0.0/16"
     serviceSubnet: "10.96.0.0/12"
   auth:
-    # Voir la doc pour récupérer les valeurs d'accès à l'API
+    # Voir la doc sur l'Azure AD
     oidc-client-id: "5e94d87a-0652-4d9c-bc7f-e3c18ca1e57e"
     oidc-issuer-url: "https://sts.windows.net/4d7ad159-1265-437a-b9f6-2946247d5bf9/"
     # Nom d'utilisateur contenu dans le token (+préfixe dans les ressources K8S)
@@ -21,5 +25,6 @@ kubelet:
 cilium:
   namespace: kube-system
   ipam: kubernetes
+  # Activation de l'export de métriques au format Prometheus
   agent-metrics: true
   operator-metrics: true
