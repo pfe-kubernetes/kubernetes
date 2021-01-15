@@ -1,27 +1,27 @@
-  apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: default
+  namespace: secu-test
   name: namespace-reader
 rules:
 - apiGroups: [""]
   resources: ["pods"]
   verbs: ["get", "watch", "list"]
 
-  apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: default
+  namespace: secu-test
   name: mamepace-prof
 rules:
 - apiGroups: [""]
   resources: ["pods"]
   verbs: ["get", "watch", "list","create"]
 
-  apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: default
+  namespace: secu-test
   name: namespace-admin
 rules:
 - apiGroups: [""]
