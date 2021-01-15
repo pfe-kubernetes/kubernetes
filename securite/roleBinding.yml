@@ -3,8 +3,8 @@ kind: RoleBinding
 metadata:
   name: namespaces-etudiant
 subjects:
-- kind: Group
-  name: 
+- kind: User
+  name: camille.fredouillard@reseau.eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
@@ -16,8 +16,8 @@ kind: RoleBinding
 metadata:
   name: namespaces-prof
 subjects:
-- kind: Group
-  name: 
+- kind: User
+  name: vincent.ploquien@reseau.eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
@@ -29,7 +29,7 @@ kind: RoleBinding
 metadata:
   name: namespaces-admin
 subjects:
-- kind: Group
+- kind: User
   name: 
   apiGroup: rbac.authorization.k8s.io
 roleRef:
