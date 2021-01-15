@@ -4,7 +4,7 @@ metadata:
   name: namespaces-etudiant
 subjects:
 - kind: User
-  name: camille.fredouillard@reseau.eseo.fr
+  name: 
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
@@ -17,7 +17,7 @@ metadata:
   name: namespaces-prof
 subjects:
 - kind: User
-  name: vincent.ploquien@reseau.eseo.fr
+  name: 
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role

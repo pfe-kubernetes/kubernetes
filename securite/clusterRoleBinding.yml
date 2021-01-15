@@ -17,7 +17,7 @@ metadata:
   name: accesssClusterAdmin
 subjects:
 - kind: User
-  name: guillaume.cahagne@reseau.eseo.fr
+  name: eseo:guillaume.cahagne@reseau.eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
