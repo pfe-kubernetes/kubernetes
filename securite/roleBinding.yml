@@ -1,20 +1,20 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: namespaces-etudiant
+  name: namespace-etudiant
 subjects:
 - kind: User
   name: eseo:alexis.fredouillard@reseau.eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: namespaces-reader
+  name: namespace-reader
   apiGroup: rbac.authorization.k8s.io
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: namespaces-prof
+  name: namespace-create
 subjects:
 - kind: User
   name: eseo:caroline.postec@reseau.eseo.fr
@@ -27,12 +27,12 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: namespaces-admin
+  name: namespace-admin
 subjects:
 - kind: User
   name: eseo:marion.plassais@reseau.eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: namespaces-admin
+  name: namespace-admin-all
   apiGroup: rbac.authorization.k8s.io
