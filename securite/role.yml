@@ -1,0 +1,26 @@
+  apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: namespaces-reader
+rules:
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["watch"]
+
+  apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: accessNamepacesProf
+rules:
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "watch", "list"]
+
+  apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: AccessNamspacesAdmin
+rules:
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]

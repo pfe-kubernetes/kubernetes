@@ -1,0 +1,38 @@
+  apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespaces-etudiant
+subjects:
+- kind: Group
+  name: 
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: namespaces-reader
+  apiGroup: rbac.authorization.k8s.io
+
+  apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespaces-prof
+subjects:
+- kind: Group
+  name: 
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: accesssCluster
+  apiGroup: rbac.authorization.k8s.io
+
+  apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespaces-admin
+subjects:
+- kind: Group
+  name: 
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: accesssCluster
+  apiGroup: rbac.authorization.k8s.io
