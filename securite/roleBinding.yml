@@ -21,7 +21,7 @@ subjects:
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: accesssCluster
+  name: namespaces-prof
   apiGroup: rbac.authorization.k8s.io
 
   apiVersion: rbac.authorization.k8s.io/v1
@@ -34,5 +34,5 @@ subjects:
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: accesssCluster
+  name: namespaces-admin
   apiGroup: rbac.authorization.k8s.io

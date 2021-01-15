@@ -16,10 +16,10 @@ kind: ClusterRoleBinding
 metadata:
   name: accesssClusterAdmin
 subjects:
-- kind: Group
-  name: 
+- kind: User
+  name: guillaume.cahagne@reseau.eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
-  name: cluster-all
+  name: cluster-admin
   apiGroup: rbac.authorization.k8s.io
