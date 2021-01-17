@@ -2,6 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: namespace-etudiant
+  namespace: secu-test
 subjects:
 - kind: User
   name: eseo:alexis.fredouillard@reseau.eseo.fr
@@ -15,6 +16,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: namespace-prof
+  namespace: secu-test
 subjects:
 - kind: User
   name: eseo:caroline.postec@reseau.eseo.fr
@@ -28,6 +30,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: namespace-admin
+  namespace: secu-test
 subjects:
 - kind: User
   name: eseo:marion.plassais@reseau.eseo.fr
