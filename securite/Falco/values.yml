@@ -291,16 +291,19 @@ falco:
     enabled: true
 
 customRules:
-  {}
-  # Although Falco comes with a nice default rule set for detecting weird
-  # behavior in containers, our users are going to customize the run-time
-  # security rule sets or policies for the specific container images and
-  # applications they run. This feature can be handled in this section.
-  #
-  # Example:
-  #
-  # rules-traefik.yaml: |-
-  #   [ rule body ]
+  rules-bash.yaml: |-
+    - macro: container
+      condition: container.id != host
+
+    - macro: spawned_process
+      condition: evt.type = execve and evt.dir=<
+
+    - rule: run_shell_in_container
+      desc: a shell was spawned by a non-shell program in a container. Container entrypoints are excluded.
+      condition: container and proc.name = bash and spawned_process and proc.pname exists and not proc.pname in (bash)
+      output: "Shell spawned in a container other than entrypoint (user=%user.name container_id=%container.id container_name=%container.name shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)"
+      priority: WARNING
+  
 
 # certificates used by webserver and grpc server
 # paste certificate content or use helm with --set-file
