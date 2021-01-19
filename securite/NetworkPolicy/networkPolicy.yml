@@ -30,6 +30,7 @@ apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
   name: "allow-within-namespace"
+  namespace: projet
 specs:
   - endpointSelector:
       matchLabels: {} 
