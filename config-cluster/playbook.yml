@@ -264,7 +264,7 @@
     # Monitoring (Prometheus / Grafana / Loki)
     - name: Création manifests Monitoring
       template:
-        src: {{ item }}
+        src: "{{ item }}"
         dest: /manifests/
         group: root
         mode: "0644"
