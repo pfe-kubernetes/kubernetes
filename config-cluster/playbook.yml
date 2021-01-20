@@ -232,3 +232,21 @@
 
     - name: Ajout des manifests de base (authentification, ...)
       shell: kubectl apply -f /manifests
+
+    - name: Petite pause après pour la création des disques...
+      pause:
+        seconds: "20"
+
+    - name: Récupération des blockdevices disponibles
+      shell: kubectl get blockdevice --namespace openebs --output name
+      register: blockdevices
+
+    - name: Création manifests OpenEBS
+      template:
+        src: templates/openebs.yaml
+        dest: /openebs.yaml
+        group: root
+        mode: "0644"
+
+    - name: Ajout des manifests OpenEBS
+      shell: kubectl apply -f /openebs.yaml
