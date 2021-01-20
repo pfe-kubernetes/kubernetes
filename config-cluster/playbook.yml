@@ -241,14 +241,15 @@
       pause:
         seconds: "120"
 
-    block:
-      - name: Récupération des blockdevices disponibles
-        shell: kubectl get bd --namespace openebs --output name
-        register: blockdevices
-    rescue:
-      - name: Récupération des blockdevices disponibles
-        shell: kubectl get bd --namespace openebs --output name
-        register: blockdevices
+    - name: Récupération des blockdevices disponibles
+      block:
+        - name: Récupération des blockdevices disponibles 1
+          shell: kubectl get bd --namespace openebs --output name
+          register: blockdevices
+      rescue:
+        - name: Récupération des blockdevices disponibles 2
+          shell: kubectl get bd --namespace openebs --output name
+          register: blockdevices
 
     - name: Création manifests OpenEBS
       template:
