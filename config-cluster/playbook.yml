@@ -78,8 +78,8 @@
     - name: Installation cri-o et binaires kubernetes
       apt:
         name:
-          - "cri-o={{crio.version}}"
-          - "cri-o-runc={{crio.version}}"
+          - cri-o
+          - cri-o-runc
           - "kubelet={{kubelet.version}}"
           - "kubeadm={{kubelet.version}}"
           - "kubectl={{kubelet.version}}"
