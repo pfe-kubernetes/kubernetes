@@ -236,10 +236,10 @@
 
     - name: Petite pause après pour la création des blockDevices...
       pause:
-        seconds: "20"
+        seconds: "120"
 
     - name: Récupération des blockdevices disponibles
-      shell: kubectl get blockdevice --namespace openebs --output name
+      shell: kubectl get bd --namespace openebs --output name
       register: blockdevices
 
     - name: Création manifests OpenEBS
