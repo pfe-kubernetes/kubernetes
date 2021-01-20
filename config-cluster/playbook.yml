@@ -164,18 +164,10 @@
         - cilium https://helm.cilium.io/
         - openebs https://openebs.github.io/charts
         - falcosecurity https://falcosecurity.github.io/charts
+        - loki https://grafana.github.io/loki/charts
 
     - name: Mise à jour des Charts Helm
       shell: helm repo update
-
-    - name: Installation Cilium
-      shell: helm install cilium cilium/cilium --namespace {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agentMetrics }} --set operator.prometheus.enable={{ cilium.operatorMetrics }}
-
-    - name: Création namespace openebs
-      shell: kubectl create namespace openebs
-
-    - name: Installation OpenEBS
-      shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdc" --set localprovisioner.enabled=false --set snapshotOperator.enabled=false
 
     - name: Récupération de la commande 'kubeadm join' pour les masters
       set_fact:
@@ -215,14 +207,15 @@
   vars_files:
     - vars.yml
   tasks:
+    # Vérifications
     - name: Vérification des noeuds
       shell: kubectl get nodes
       register: nodes_check
-
     - debug:
         var: nodes_check.stdout_lines
 
-    - name: Configuration kubelet
+    # Manifests basiques
+    - name: Récupération manifests
       copy:
         src: manifests
         dest: /
@@ -233,7 +226,15 @@
     - name: Ajout des manifests de base (authentification, ...)
       shell: kubectl apply -f /manifests
 
-    - name: Petite pause après pour la création des disques...
+    # Cilium
+    - name: Installation Cilium
+      shell: helm install cilium cilium/cilium --namespace {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agentMetrics }} --set operator.prometheus.enable={{ cilium.operatorMetrics }}
+
+    # OpenEBS
+    - name: Installation OpenEBS
+      shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdc" --set localprovisioner.enabled=false --set snapshotOperator.enabled=false
+
+    - name: Petite pause après pour la création des blockDevices...
       pause:
         seconds: "20"
 
@@ -244,9 +245,23 @@
     - name: Création manifests OpenEBS
       template:
         src: templates/openebs.yaml
-        dest: /openebs.yaml
+        dest: /manifests/openebs.yaml
         group: root
         mode: "0644"
 
     - name: Ajout des manifests OpenEBS
-      shell: kubectl apply -f /openebs.yaml
+      shell: kubectl apply -f /manifests/openebs.yaml
+
+    # Monitoring (Prometheus / Grafana / Loki)
+    - name: Création manifests Monitoring
+      template:
+        src: ../monitoring
+        dest: /manifests/
+        group: root
+        mode: "0644"
+
+    - name: Ajout des manifests Monitoring
+      shell: kubectl apply -R -f /manifests/monitoring
+
+    - name: Ajout de Loki
+      shell: helm install loki loki/loki-stack -n monitoring
