@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+        - name: grafana
+          image: quay.io/app-sre/grafana
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/grafana/"
+            - name: dashboards
+              mountPath: "/var/lib/grafana/dashboards"
+            - name: datasources
+              mountPath: "/etc/grafana/provisioning/datasources/"
+            - name: dashboardproviders
+              mountPath: "/etc/grafana/provisioning/dashboards/"
+            - name: grafana-data
+              mountPath: "/var/lib/grafana"
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+          resources:
+            limits:
+              cpu: 50m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 100Mi
+      volumes:
+        - name: config
+          configMap:
+            name: grafana-config
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboardproviders
+          configMap:
+            name: grafana-dashboardproviders
+        - name: dashboards
+          configMap:
+            name: grafana-dashboard-k8s-resources-cluster
+        - name: grafana-data
+          emptyDir: {}
+
