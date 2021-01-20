@@ -3,6 +3,7 @@ kind: ClusterConfiguration
 networking:
         podSubnet: "{{ kubelet.network.podSubnet }}"
         serviceSubnet: "{{ kubelet.network.serviceSubnet }}"
+controlPlaneEndpoint: "{{ kubelet.ha.haproxyIp }}:6443"
 apiServer:
         extraArgs:
                 oidc-client-id: "{{ kubelet.auth.oidc-client-id }}"

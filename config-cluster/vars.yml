@@ -7,6 +7,9 @@ crio:
 kubelet:
   # Choix de la version K8s
   version: 1.19
+  # Options nécessaires à la Haute Dispo
+  ha:
+    haproxyIp: "192.168.4.243"
   # Configuration des réseaux attribués à K8s
   network:
     podSubnet: "10.244.0.0/16"

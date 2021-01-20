@@ -1,4 +1,27 @@
 ---
+- hosts: haproxy
+  remote_user: k8s
+  become: yes
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Installation HAProxy
+      apt:
+        name: haproxy
+        state: present
+    - name: Copie de la configuration
+      template:
+        src: templates/haproxy.yaml
+        dest: /etc/haproxy/haproxy.cfg
+        group: root
+        mode: "0644"
+    - name: Démarrage HAProxy
+      service:
+        name: haproxy
+        state: started
+        enabled: yes
+
 - hosts: k8s
   remote_user: k8s
   become: yes
@@ -101,7 +124,7 @@
         mode: "0644"
 
     - name: kubeadm init
-      shell: kubeadm init --config /root/kubeadm.yaml
+      shell: kubeadm init --config /root/kubeadm.yaml --upload-certs
       register: kubeadm_out
 
     - name: Création du dossier .kube
@@ -138,9 +161,16 @@
     - name: Installation OpenEBS
       shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdb" --set localprovisioner.enabled=false --snapshotOperator.enabled-false
 
-    - name: Récupération de la commande 'kubeadm join'
+    - debug:
+      var: kubeadm_out.stdout_lines
+
+    - name: Récupération de la commande 'kubeadm join' pour les masters
       set_fact:
-        kubeadm_join: "{{ kubeadm_out.stdout_lines[-2][:-2]+kubeadm_out.stdout_lines[-1] }}"
+        kubeadm_masters_join: "{{ kubeadm_out.stdout_lines[-8][:-2]+kubeadm_out.stdout_lines[-7] }}"
+
+    - name: Récupération de la commande 'kubeadm join' pour les workers
+      set_fact:
+        kubeadm_workers_join: "{{ kubeadm_out.stdout_lines[-2][:-2]+kubeadm_out.stdout_lines[-1] }}"
 
     - name: Petite pause après l'initialisation du cluster...
       pause:
@@ -167,7 +197,7 @@
       register: nodes_check
 
     - debug:
-        var: nodes_check.stdout_lines
+      var: nodes_check.stdout_lines
 
     - name: Ajout des manifests de base (authentification, ...)
       shell: kubectl apply -f manifests/
