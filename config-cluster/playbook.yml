@@ -78,11 +78,11 @@
     - name: Installation cri-o et binaires kubernetes
       apt:
         name:
-          - cri-o #={{crio.version}}
-          - cri-o-runc #={{crio.version}}
-          - kubelet #={{kubelet.version}}
-          - kubeadm #={{kubelet.version}}
-          - kubectl #={{kubelet.version}}
+          - "cri-o={{crio.version}}"
+          - "cri-o-runc={{crio.version}}"
+          - "kubelet={{kubelet.version}}"
+          - "kubeadm={{kubelet.version}}"
+          - "kubectl={{kubelet.version}}"
           - open-iscsi
         state: present
 
@@ -146,6 +146,7 @@
       copy:
         src: /etc/kubernetes/admin.conf
         dest: /root/.kube/config
+        remote_src: yes
         owner: root
         group: root
         mode: "0600"
@@ -175,7 +176,7 @@
 
     - name: Récupération de la commande 'kubeadm join' pour les masters
       set_fact:
-        kubeadm_masters_join: "{{ kubeadm_out.stdout_lines[-8][:-2]+kubeadm_out.stdout_lines[-7] }}"
+        kubeadm_masters_join: "{{ kubeadm_out.stdout_lines[-12][:-2]+kubeadm_out.stdout_lines[-11][:-2]+kubeadm_out.stdout_lines[-10] }}"
 
     - name: Récupération de la commande 'kubeadm join' pour les workers
       set_fact:

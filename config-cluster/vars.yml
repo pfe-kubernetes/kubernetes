@@ -6,7 +6,7 @@ crio:
 
 kubelet:
   # Choix de la version K8s
-  version: 1.19
+  version: 1.19.7-00
   # Options nécessaires à la Haute Dispo
   ha:
     haproxyIp: "192.168.4.243"
