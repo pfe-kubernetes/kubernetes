@@ -175,7 +175,7 @@
       shell: kubectl create namespace openebs
 
     - name: Installation OpenEBS
-      shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdb" --set localprovisioner.enabled=false --set snapshotOperator.enabled=false
+      shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdc" --set localprovisioner.enabled=false --set snapshotOperator.enabled=false
 
     - name: Récupération de la commande 'kubeadm join' pour les masters
       set_fact:
