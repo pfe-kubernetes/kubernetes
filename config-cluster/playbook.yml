@@ -154,6 +154,10 @@
         - stable https://charts.helm.sh/stable
         - cilium https://helm.cilium.io/
         - openebs https://openebs.github.io/charts
+        - falcosecurity https://falcosecurity.github.io/charts
+
+    - name: Mise à jours des Charts Helm
+      shell: helm repo update
 
     - name: Installation Cilium
       shell: helm install cilium cilium/cilium --namespace {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agent-metrics }} --set operator.prometheus.enable={{ cilium.operator-metrics }}
