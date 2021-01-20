@@ -225,7 +225,7 @@
     - name: Configuration kubelet
       copy:
         src: manifests
-        dest: /manifests
+        dest: /
         owner: root
         group: root
         mode: "0644"
