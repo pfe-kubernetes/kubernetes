@@ -18,9 +18,9 @@ spec:
     poolType: striped
   blockDevices:
     blockDeviceList:
-    {% for bd in hostvars[groups['master'][0]]['blockdevices'] %}
+    {% for bd in hostvars[groups['master'][0]].blockdevices %}
     - {{ bd }}
-    {% %}
+    {% endfor %}
 
 ---
 apiVersion: storage.k8s.io/v1
