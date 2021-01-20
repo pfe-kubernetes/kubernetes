@@ -264,10 +264,12 @@
     # Monitoring (Prometheus / Grafana / Loki)
     - name: Création manifests Monitoring
       template:
-        src: ../monitoring
+        src: {{ item }}
         dest: /manifests/
         group: root
         mode: "0644"
+      with_fileglob:
+        - "../monitoring"
 
     - name: Ajout des manifests Monitoring
       shell: kubectl apply -R -f /manifests/monitoring
