@@ -1,4 +1,9 @@
 ---
+- hosts: all
+  remote_user: k8s
+  become: yes
+  gather_facts: true
+
 - hosts: haproxy
   remote_user: k8s
   become: yes
