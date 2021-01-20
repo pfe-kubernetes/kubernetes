@@ -55,6 +55,7 @@
           - kubelet #={{kubelet.version}}
           - kubeadm #={{kubelet.version}}
           - kubectl #={{kubelet.version}}
+          - open-iscsi
         state: present
 
     - name: Marquage des paquets pour les binaires kubernetes
@@ -75,6 +76,12 @@
     - name: Autoriser le démarrage au boot de kubelet
       service:
         name: kubelet
+        enabled: yes
+
+    - name: Start iSCSI
+      service:
+        name: iscsid
+        state: started
         enabled: yes
 
     - name: Relancer les règles de sysctl.conf
@@ -123,9 +130,13 @@
       loop:
         - stable https://charts.helm.sh/stable
         - cilium https://helm.cilium.io/
+        - openebs https://openebs.github.io/charts
 
     - name: Installation Cilium
-      shell: helm install cilium cilium/cilium -n {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agent-metrics }} --set operator.prometheus.enable={{ cilium.operator-metrics }}
+      shell: helm install cilium cilium/cilium --namespace {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agent-metrics }} --set operator.prometheus.enable={{ cilium.operator-metrics }}
+
+    - name: Installation OpenEBS
+      shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdb" --set localprovisioner.enabled=false --snapshotOperator.enabled-false
 
     - name: Récupération de la commande 'kubeadm join'
       set_fact:
