@@ -16,18 +16,18 @@ kubelet:
     serviceSubnet: "10.96.0.0/12"
   auth:
     # Voir la doc sur l'Azure AD
-    oidc-client-id: "5e94d87a-0652-4d9c-bc7f-e3c18ca1e57e"
-    oidc-issuer-url: "https://sts.windows.net/4d7ad159-1265-437a-b9f6-2946247d5bf9/"
+    oidcClientId: "5e94d87a-0652-4d9c-bc7f-e3c18ca1e57e"
+    oidcIssuerURL: "https://sts.windows.net/4d7ad159-1265-437a-b9f6-2946247d5bf9/"
     # Nom d'utilisateur contenu dans le token (+préfixe dans les ressources K8S)
-    oidc-username-claim: "upn"
-    oidc-username-prefix: "eseo:"
+    oidcUsernameClaim: "upn"
+    oidcUsernamePrefix: "eseo:"
     # Liste des groupes dans le token (+préfixe dans les ressources K8S)
-    oidc-groups-claim: "groups"
-    oidc-groups-prefix: "eseo:"
+    oidcGroupsClaim: "groups"
+    oidcGroupsPrefix: "eseo:"
 
 cilium:
   namespace: kube-system
   ipam: kubernetes
   # Activation de l'export de métriques au format Prometheus
-  agent-metrics: true
-  operator-metrics: true
+  agentMetrics: true
+  operatorMetrics: true

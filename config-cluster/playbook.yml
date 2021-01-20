@@ -165,7 +165,7 @@
       shell: helm repo update
 
     - name: Installation Cilium
-      shell: helm install cilium cilium/cilium --namespace {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agent-metrics }} --set operator.prometheus.enable={{ cilium.operator-metrics }}
+      shell: helm install cilium cilium/cilium --namespace {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agentMetrics }} --set operator.prometheus.enable={{ cilium.operatorMetrics }}
 
     - name: Installation OpenEBS
       shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdb" --set localprovisioner.enabled=false --snapshotOperator.enabled-false

@@ -6,12 +6,12 @@ networking:
 controlPlaneEndpoint: "{{ kubelet.ha.haproxyIp }}:6443"
 apiServer:
         extraArgs:
-                oidc-client-id: "{{ kubelet.auth.oidc-client-id }}"
-                oidc-issuer-url: "{{ kubelet.auth.oidc-issuer-url }}"
-                oidc-username-claim: "{{ kubelet.auth.oidc-username-claim }}"
-                oidc-username-prefix: "{{ kubelet.auth.oidc-username-prefix }}"
-                oidc-groups-claim: "{{ kubelet.auth.oidc-groups-claim }}"
-                oidc-groups-prefix: "{{ kubelet.auth.oidc-groups-prefix }}"
+                oidc-client-id: "{{ kubelet.auth.oidcClientId }}"
+                oidc-issuer-url: "{{ kubelet.auth.oidcIssuerURL }}"
+                oidc-username-claim: "{{ kubelet.auth.oidcUsernameClaim }}"
+                oidc-username-prefix: "{{ kubelet.auth.oidcUsernamePrefix }}"
+                oidc-groups-claim: "{{ kubelet.auth.oidcGroupsClaim }}"
+                oidc-groups-prefix: "{{ kubelet.auth.oidcGroupsPrefix }}"
 ---
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
