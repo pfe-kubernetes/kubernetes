@@ -132,6 +132,9 @@
       shell: kubeadm init --config /root/kubeadm.yaml --upload-certs
       register: kubeadm_out
 
+    - debug:
+        var: kubeadm_out.stdout_lines
+
     - name: Création du dossier .kube
       file:
         path: /root/.kube
@@ -169,9 +172,6 @@
 
     - name: Installation OpenEBS
       shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdb" --set localprovisioner.enabled=false --snapshotOperator.enabled-false
-
-    - debug:
-        var: kubeadm_out.stdout_lines
 
     - name: Récupération de la commande 'kubeadm join' pour les masters
       set_fact:
