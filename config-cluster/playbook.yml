@@ -222,5 +222,13 @@
     - debug:
         var: nodes_check.stdout_lines
 
+    - name: Configuration kubelet
+      copy:
+        src: manifests
+        dest: /manifests
+        owner: root
+        group: root
+        mode: "0644"
+
     - name: Ajout des manifests de base (authentification, ...)
-      shell: kubectl apply -f manifests/
+      shell: kubectl apply -f /manifests
