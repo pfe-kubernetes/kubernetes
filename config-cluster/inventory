@@ -6,6 +6,10 @@ master
 master_backup
 workers
 
+[masters:children]
+master
+master_backup
+
 [master]
 192.168.4.234
 

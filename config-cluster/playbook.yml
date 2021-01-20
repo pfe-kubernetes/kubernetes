@@ -12,14 +12,14 @@
         state: present
     - name: Copie de la configuration
       template:
-        src: templates/haproxy.yaml
+        src: templates/haproxy.cfg
         dest: /etc/haproxy/haproxy.cfg
         group: root
         mode: "0644"
     - name: Démarrage HAProxy
       service:
         name: haproxy
-        state: started
+        state: restarted
         enabled: yes
 
 - hosts: k8s
