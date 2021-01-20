@@ -271,6 +271,9 @@
       with_fileglob:
         - "../monitoring"
 
+    - name: Retire les json des dashboard du dossier manifests
+      shell: rm -R /manifests/monitoring/grafana/dashboard-json
+
     - name: Ajout des manifests Monitoring
       shell: kubectl apply -R -f /manifests/monitoring
 
