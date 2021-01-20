@@ -3,7 +3,7 @@
 ## Les exporter ne peuvent communiquer qu'avec prometheus  
 apiVersion: "cilium.io/v2"
 kind: CiliumClusterwideNetworkPolicy
-description: "Default deny and allow egress to kube-dns pod."
+description: ""
 metadata:
   name: "prometheus-exporter-policy"
 spec:
@@ -58,4 +58,51 @@ specs:
             path: "/metrics"
 
 ---
+## La db ne peut communiquer qu'avec Wordpress
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "db-access"
+  namespace: wordpress
+spec:
+  podSelector:
+    matchLabels:
+      tire: mysql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          tire: frontend
+    ports:
+    - port: "3306"
+    protocol: "TCP"
 
+---
+## Autoraisation de la connexion au serveur web sur le port 80 et autorisation de connexion à la db
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "frontend-access"
+  namespace: wordpress
+spec:
+  podSelector:
+      matchLabels:
+        tire: frontend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    ports:
+    - port: "8080"
+    protocol: "TCP"
+  egress:
+  - to: 
+    - podSelector:
+        matchLabels:
+          tire: db
+    ports:
+    - port: "3306"
+    protocol: "TCP"
