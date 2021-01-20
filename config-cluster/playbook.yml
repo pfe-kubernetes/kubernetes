@@ -136,7 +136,7 @@
       file:
         path: /root/.kube
         state: directory
-        user: root
+        owner: root
         group: root
         mode: "0700"
     - name: Copie de la config kubectl
