@@ -1,7 +1,16 @@
-192.168.4.242
+[haproxy]
+192.168.4.243
+
+[k8s:children]
+master
+master_backup
+workers
 
 [master]
 192.168.4.234
+
+[master_backup]
+192.168.4.242
 
 [workers]
 192.168.4.235
