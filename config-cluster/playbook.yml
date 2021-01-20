@@ -166,7 +166,7 @@
       shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdb" --set localprovisioner.enabled=false --snapshotOperator.enabled-false
 
     - debug:
-      var: kubeadm_out.stdout_lines
+        var: kubeadm_out.stdout_lines
 
     - name: Récupération de la commande 'kubeadm join' pour les masters
       set_fact:
@@ -211,7 +211,7 @@
       register: nodes_check
 
     - debug:
-      var: nodes_check.stdout_lines
+        var: nodes_check.stdout_lines
 
     - name: Ajout des manifests de base (authentification, ...)
       shell: kubectl apply -f manifests/
