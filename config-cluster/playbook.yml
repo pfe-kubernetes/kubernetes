@@ -241,30 +241,30 @@
       pause:
         seconds: "420"
 
-    - name: Récupération des blockdevices disponibles
-      shell: kubectl get bd --namespace openebs --output name
-      register: blockdevices
+    # - name: Récupération des blockdevices disponibles
+    #   shell: kubectl get bd --namespace openebs --output name
+    #   register: blockdevices
 
-    - name: Création manifests OpenEBS
-      template:
-        src: templates/openebs.yaml
-        dest: /manifests/openebs.yaml
-        group: root
-        mode: "0644"
+    # - name: Création manifests OpenEBS
+    #   template:
+    #     src: templates/openebs.yaml
+    #     dest: /manifests/openebs.yaml
+    #     group: root
+    #     mode: "0644"
 
-    - name: Ajout des manifests OpenEBS
-      shell: kubectl apply -f /manifests/openebs.yaml
+    # - name: Ajout des manifests OpenEBS
+    #   shell: kubectl apply -f /manifests/openebs.yaml
 
-    # Monitoring (Prometheus / Grafana / Loki)
-    - name: Création manifests Monitoring
-      template:
-        src: ../monitoring
-        dest: /manifests/
-        group: root
-        mode: "0644"
+    # # Monitoring (Prometheus / Grafana / Loki)
+    # - name: Création manifests Monitoring
+    #   template:
+    #     src: ../monitoring
+    #     dest: /manifests/
+    #     group: root
+    #     mode: "0644"
 
-    - name: Ajout des manifests Monitoring
-      shell: kubectl apply -R -f /manifests/monitoring
+    # - name: Ajout des manifests Monitoring
+    #   shell: kubectl apply -R -f /manifests/monitoring
 
-    - name: Ajout de Loki
-      shell: helm install loki loki/loki-stack -n monitoring
+    # - name: Ajout de Loki
+    #   shell: helm install loki loki/loki-stack -n monitoring
