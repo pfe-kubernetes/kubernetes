@@ -236,7 +236,7 @@
 
     - name: Petite pause après pour la création des blockDevices...
       pause:
-        seconds: "240"
+        seconds: "420"
 
     - name: Récupération des blockdevices disponibles
       shell: kubectl get bd --namespace openebs --output name
