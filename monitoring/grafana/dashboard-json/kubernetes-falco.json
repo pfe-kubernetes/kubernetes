@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 9,
-  "iteration": 1611086715451,
+  "iteration": 1611149821336,
   "links": [],
   "panels": [
     {
@@ -168,7 +168,7 @@
       "points": false,
       "renderer": "flot",
       "repeatDirection": "h",
-      "repeatIteration": 1611086715451,
+      "repeatIteration": 1611149821336,
       "repeatPanelId": 8,
       "scopedVars": {
         "rule": {
@@ -514,16 +514,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "tags": [],
-          "text": [
-            "Contact K8S API Server From Container",
-            "run_shell_in_container"
-          ],
-          "value": [
-            "Contact K8S API Server From Container",
-            "run_shell_in_container"
-          ]
+          "selected": false,
+          "text": "Write below binary dir",
+          "value": "Write below binary dir"
         },
         "datasource": "prometheus",
         "definition": "label_values(falco_events, rule)",
