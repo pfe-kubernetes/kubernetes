@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Reset des clés SSH
+for ip in 192.168.4.{234..238},192.168.4.{242..243}; do ssh-keygen -R $ip ; done
+
+# Récupération des nouvelles clés
+for ip in 192.168.4.{234..238},192.168.4.{242..243}; do ssh-keyscan -t ecdsa -H $ip >> ~/.ssh/known_hosts ; done

@@ -1,0 +1,23 @@
+---
+- hosts: cauchy
+  remote_user: etudiant
+  become: yes
+  gather_facts: true
+
+  # Le script ne créer pas la machine HAProxy
+  # Il ne fait pas non plus de git pull...
+
+  tasks:
+    - name: Suppression des machines
+      shell:
+        chdir: "/home/etudiant/pfe-git/kubernetes/socle-VM/"
+        cmd: "k8s_hostname={{k8s-name}} k8s_ip={{k8s-ip}} vagrant destroy"
+
+    - name: Petite pause 🐥
+      pause:
+        seconds: "20"
+
+    - name: Recréation des machines
+      shell:
+        chdir: "/home/etudiant/pfe-git/kubernetes/socle-VM/"
+        cmd: "k8s_hostname={{k8s-name}} k8s_ip={{k8s-ip}} vagrant up"

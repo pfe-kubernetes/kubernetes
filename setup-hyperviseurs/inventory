@@ -1,0 +1,7 @@
+[cauchy]
+192.168.4.110   k8s-name=master1    k8s-ip=192.168.4.234
+192.168.4.107   k8s-name=master2    k8s-ip=192.168.4.242
+192.168.4.83    k8s-name=node1      k8s-ip=192.168.4.235
+192.168.4.111   k8s-name=node2      k8s-ip=192.168.4.236
+192.168.4.108   k8s-name=node3      k8s-ip=192.168.4.237
+192.168.4.93    k8s-name=node4      k8s-ip=192.168.4.238
