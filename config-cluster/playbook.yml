@@ -244,11 +244,11 @@
     - name: Récupération des blockdevices disponibles
       block:
         - name: Récupération des blockdevices disponibles 1
-          shell: kubectl get bd --namespace openebs --output name
+          shell: kubectl get bd -n openebs --no-headers -o custom-columns=:metadata.name
           register: blockdevices
       rescue:
         - name: Récupération des blockdevices disponibles 2
-          shell: kubectl get bd --namespace openebs --output name
+          shell: kubectl get bd -n openebs --no-headers -o custom-columns=:metadata.name
           register: blockdevices
 
     - name: Création manifests OpenEBS
