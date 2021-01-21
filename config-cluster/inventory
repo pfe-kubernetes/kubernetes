@@ -5,7 +5,7 @@
 control-plane
 workers
 
-[control-plane]
+[masters]
 192.168.4.234
 192.168.4.242
 
