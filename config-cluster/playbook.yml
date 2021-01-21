@@ -115,7 +115,7 @@
     - name: Relancer les règles de sysctl.conf
       command: sysctl --system
 
-- hosts: controle-plane[0]
+- hosts: masters[0]
   remote_user: k8s
   become: yes
   vars_files:
