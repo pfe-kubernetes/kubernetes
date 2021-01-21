@@ -1,11 +1,11 @@
 ## Role pour les namespaces pour les edutiants, professeur qui font le cours, et administrateur du cours
 
-## Cours dinfrastructure et reseau de I1
+## Cours d'infrastructure et reseau de I1
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructures_et_reseau
-  name: access_cours_etudiant
+  namespace: infrastructures-et-reseau
+  name: access-cours-etudiant
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -15,8 +15,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructures_et_reseau 
-  name: access_cours_prof
+  namespace: infrastructures-et-reseau 
+  name: access-cours-prof
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -26,8 +26,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructures_et_reseau
-  name: namespace_admin
+  namespace: infrastructures-et-reseau
+  name: namespace-admin
 rules:
 - apiGroups: [""]
   resources: [""]
@@ -37,8 +37,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructure_VmWare
-  name: access_cours_etudiant
+  namespace: infrastructure-VmWare
+  name: access-cours-etudiant
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -48,8 +48,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructure_VmWare 
-  name: access_cours_prof
+  namespace: infrastructure-VmWare 
+  name: access-cours-prof
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -59,8 +59,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructure_VmWare
-  name: namespace_admin
+  namespace: infrastructure-VmWare
+  name: namespace-admin
 rules:
 - apiGroups: [""]
   resources: [""]
@@ -70,8 +70,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: securite_des_echanges
-  name: access_cours_etudiant
+  namespace: securite-des-echanges
+  name: access-cours-etudiant
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -81,8 +81,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: securite_des_echanges 
-  name: access_cours_prof
+  namespace: securite-des-echanges 
+  name: access-cours-prof
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -92,8 +92,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: securite_des_echanges
-  name: namespace_admin
+  namespace: securite-des-echanges
+  name: namespace-admin
 rules:
 - apiGroups: [""]
   resources: [""]
@@ -104,7 +104,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: SoManager
-  name: access_etudiant
+  name: access-etudiant
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -115,7 +115,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: SoManager 
-  name: access_prof
+  name: access-prof
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -126,7 +126,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: SoManager
-  name: namespace_admin
+  name: namespace-admin
 rules:
 - apiGroups: [""]
   resources: [""]
@@ -136,8 +136,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: capture_the_flag
-  name: access_etudiant
+  namespace: capture-the-flag
+  name: access-etudiant
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -147,8 +147,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: capture_the_flag 
-  name: access_prof
+  namespace: capture-the-flag 
+  name: access-prof
 rules:
 - apiGroups: [""]
   resources: ["deployments","pods","configmaps","services"]
@@ -158,8 +158,8 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: capture_the_flag
-  name: namespace_admin
+  namespace: capture-the-flag
+  name: namespace-admin
 rules:
 - apiGroups: [""]
   resources: [""]
