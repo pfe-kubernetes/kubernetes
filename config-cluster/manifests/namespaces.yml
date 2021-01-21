@@ -40,7 +40,7 @@ metdata:
 apiVersion: v1
 kind: Namespace
 metdata: 
-  name: Infrastructures_et_reseau 
+  name: infrastructures_et_reseau 
   labels: 
     promo: I1
     type: TD 
@@ -56,7 +56,7 @@ metdata:
 apiVersion: v1
 kind: Namespace
 metdata: 
-  name: Capture_the_flag 
+  name: capture_the_flag 
   labels: 
     promo: I3
     option: CSS
