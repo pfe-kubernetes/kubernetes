@@ -181,7 +181,7 @@
       pause:
         seconds: "20"
 
-- hosts: control-plane[1:]
+- hosts: masters[1:]
   serial: 1 # Execute le playbook machine par machine
   remote_user: k8s
   become: yes
@@ -189,7 +189,7 @@
     - vars.yml
   tasks:
     - name: kubeadm join - control plane
-      shell: "{{ hostvars[groups['control-plane'][0]]['kubeadm_masters_join'] }}"
+      shell: "{{ hostvars[groups['masters'][0]]['kubeadm_masters_join'] }}"
 
 - hosts: workers
   serial: 1 # Execute le playbook machine par machine
@@ -199,9 +199,9 @@
     - vars.yml
   tasks:
     - name: kubeadm join - workers
-      shell: "{{ hostvars[groups['control-plane'][0]]['kubeadm_workers_join'] }}"
+      shell: "{{ hostvars[groups['masters'][0]]['kubeadm_workers_join'] }}"
 
-- hosts: control-plane[0]
+- hosts: masters[0]
   remote_user: k8s
   become: yes
   vars_files:

@@ -2,10 +2,10 @@
 192.168.4.243
 
 [k8s:children]
-control-plane
+masters
 workers
 
-[control-plane]
+[masters]
 192.168.4.234
 192.168.4.242
 
