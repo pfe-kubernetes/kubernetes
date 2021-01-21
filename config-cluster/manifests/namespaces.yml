@@ -22,7 +22,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: securite_des_echanges
+  name: securite-des-echanges
   labels:
     promo: I3
     option: CSS
@@ -31,7 +31,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: infrastructure_vmware
+  name: infrastructure-vmware
   labels:
     promo: I3
     option: CSS
@@ -40,7 +40,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: infrastructures_et_reseau
+  name: infrastructures-et-reseau
   labels:
     promo: I1
     type: TD
@@ -56,7 +56,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: capture_the_flag
+  name: capture-the-flag
   labels:
     promo: I3
     option: CSS
