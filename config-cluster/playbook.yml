@@ -279,3 +279,16 @@
 
     - name: Ajout de Loki
       shell: helm install loki loki/loki-stack -n monitoring
+
+    # Monitoring Sécurité (Falco)
+    - name: Ajout de la configuration Helm
+      template:
+        src: "{{ item }}"
+        dest: /manifests/falco-values.yaml
+        group: root
+        mode: "0644"
+      with_fileglob:
+        - "../securite/Falco/values.yml"
+
+    - name: Ajout de Falco
+      shell: helm install falco falcosecurity/falco -n falco -f /manifests/falco-values.yaml
