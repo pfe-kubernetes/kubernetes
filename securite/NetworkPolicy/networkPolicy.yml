@@ -1,0 +1,108 @@
+## Network Policy 
+
+## Les exporter ne peuvent communiquer qu'avec prometheus  
+apiVersion: "cilium.io/v2"
+kind: CiliumClusterwideNetworkPolicy
+description: ""
+metadata:
+  name: "prometheus-exporter-policy"
+spec:
+  endpointSelector:
+    matchLabels:
+      role: exporter
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            "k8s:io.kubernetes.pod.namespace": monitoring
+            app: prometheus
+
+---
+## Le trafic au sein du namespace "projet" est limité à ce namespace et à l'accès au DNS et à l'accès de prometheus
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "allow-within-namespace"
+  namespace: projet
+specs:
+  - endpointSelector:
+      matchLabels: {} 
+    egress:
+    - toEndpoints:
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": projet
+    ingress:
+    - fromEndpoints:
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": projet
+  - endpointSelector:
+      matchLabels: {} 
+    egress:
+    - toEndpoints:
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": kube-system
+          "k8s:k8s-app": kube-dns
+  - endpointSelector:
+      matchLabels: {} 
+    ingress:
+    - fromEndpoints:
+      - matchLabels:
+          "k8s:io.kubernetes.pod.namespace": monitoring
+          app: prometheus
+      toPorts:
+      - ports:
+        - port: "8080"
+          protocol: "TCP"
+        rules:
+          http:
+          - method: "GET"
+            path: "/metrics"
+
+---
+## La db ne peut communiquer qu'avec Wordpress
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "db-access"
+  namespace: wordpress
+spec:
+  podSelector:
+    matchLabels:
+      tire: mysql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          tire: frontend
+    ports:
+    - port: "3306"
+    protocol: "TCP"
+
+---
+## Autoraisation de la connexion au serveur web sur le port 80 et autorisation de connexion à la db
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "frontend-access"
+  namespace: wordpress
+spec:
+  podSelector:
+      matchLabels:
+        tire: frontend
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    ports:
+    - port: "8080"
+    protocol: "TCP"
+  egress:
+  - to: 
+    - podSelector:
+        matchLabels:
+          tire: db
+    ports:
+    - port: "3306"
+    protocol: "TCP"
