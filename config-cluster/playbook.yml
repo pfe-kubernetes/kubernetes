@@ -115,7 +115,7 @@
     - name: Relancer les règles de sysctl.conf
       command: sysctl --system
 
-- hosts: master
+- hosts: controle-plane[0]
   remote_user: k8s
   become: yes
   vars_files:
@@ -181,7 +181,7 @@
       pause:
         seconds: "20"
 
-- hosts: master_backup
+- hosts: control-plane[1:]
   serial: 1 # Execute le playbook machine par machine
   remote_user: k8s
   become: yes
@@ -189,7 +189,7 @@
     - vars.yml
   tasks:
     - name: kubeadm join - control plane
-      shell: "{{ hostvars[groups['master'][0]]['kubeadm_masters_join'] }}"
+      shell: "{{ hostvars[groups['control-plane'][0]]['kubeadm_masters_join'] }}"
 
 - hosts: workers
   serial: 1 # Execute le playbook machine par machine
@@ -199,9 +199,9 @@
     - vars.yml
   tasks:
     - name: kubeadm join - workers
-      shell: "{{ hostvars[groups['master'][0]]['kubeadm_workers_join'] }}"
+      shell: "{{ hostvars[groups['control-plane'][0]]['kubeadm_workers_join'] }}"
 
-- hosts: master
+- hosts: control-plane[0]
   remote_user: k8s
   become: yes
   vars_files:

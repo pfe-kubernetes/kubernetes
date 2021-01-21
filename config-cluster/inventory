@@ -2,18 +2,11 @@
 192.168.4.243
 
 [k8s:children]
-master
-master_backup
+control-plane
 workers
 
-[masters:children]
-master
-master_backup
-
-[master]
+[control-plane]
 192.168.4.234
-
-[master_backup]
 192.168.4.242
 
 [workers]
