@@ -264,10 +264,15 @@
     # Monitoring (Prometheus / Grafana / Loki)
     - name: Création manifests Monitoring
       template:
-        src: ../monitoring
+        src: "{{ item }}"
         dest: /manifests/
         group: root
         mode: "0644"
+      with_fileglob:
+        - "../monitoring"
+
+    - name: Retire les json des dashboard du dossier manifests
+      shell: rm -R /manifests/monitoring/grafana/dashboard-json
 
     - name: Ajout des manifests Monitoring
       shell: kubectl apply -R -f /manifests/monitoring

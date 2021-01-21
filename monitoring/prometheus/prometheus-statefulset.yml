@@ -63,7 +63,7 @@ spec:
       labels:
         app: prometheus
     spec:
-      storageClassName: openebs-sc-statefulset
+      storageClassName: openebs-global
       accessModes:
         - ReadWriteOnce
       resources:
