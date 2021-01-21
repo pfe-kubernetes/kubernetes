@@ -2,13 +2,62 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: monitoring
+  labels: 
+    type: admin
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: openebs
+  labels: 
+    type: admin
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: falco
+  labels: 
+    type: admin
+--- 
+apiVersion: v1
+kind: Namespace
+metdata: 
+  name: securite_des_echanges 
+  labels: 
+    promo: I3
+    option: CSS
+    type: TD 
+--- 
+apiVersion: v1
+kind: Namespace
+metdata: 
+  name: infrastructure_VmWare 
+  labels: 
+    promo: I3
+    option: CSS
+    type: TD 
+--- 
+apiVersion: v1
+kind: Namespace
+metdata: 
+  name: Infrastructures_et_reseau 
+  labels: 
+    promo: I1
+    type: TD 
+--- 
+apiVersion: v1
+kind: Namespace
+metdata: 
+  name: SoManager 
+  labels: 
+    promo: I3
+    type: Projet 
+--- 
+apiVersion: v1
+kind: Namespace
+metdata: 
+  name: Capture_the_flag 
+  labels: 
+    promo: I3
+    option: CSS
+    type: Projet 
