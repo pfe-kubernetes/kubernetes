@@ -1,29 +1,167 @@
+## Role pour les namespaces pour les edutiants, professeur qui font le cours, et administrateur du cours
+
+## Cours dinfrastructure et reseau de I1
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: secu-test
-  name: namespace-reader
+  namespace: infrastructures_et_reseau
+  name: access_cours_etudiant
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
+  resources: ["deployments","pods","configmaps","services"]
   verbs: ["get", "watch", "list"]
+---
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: secu-test
-  name: namespace-create
+  namespace: infrastructures_et_reseau 
+  name: access_cours_prof
 rules:
 - apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "watch", "list","create"]
-
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  namespace: secu-test
-  name: namespace-admin-all
-rules:
-- apiGroups: [""]
-  resources: ["pods"]
+  resources: ["deployments","pods","configmaps","services"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: infrastructures_et_reseau
+  name: namespace_admin
+rules:
+- apiGroups: [""]
+  resources: [""]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---  
+## Cours dinfrastructure VmWare de I3
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: infrastructure_VmWare
+  name: access_cours_etudiant
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "watch", "list"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: infrastructure_VmWare 
+  name: access_cours_prof
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: infrastructure_VmWare
+  name: namespace_admin
+rules:
+- apiGroups: [""]
+  resources: [""]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---  
+## Cours de securite des echanges de I3
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: securite_des_echanges
+  name: access_cours_etudiant
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "watch", "list"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: securite_des_echanges 
+  name: access_cours_prof
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: securite_des_echanges
+  name: namespace_admin
+rules:
+- apiGroups: [""]
+  resources: [""]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---  
+## Projet de SoManager de I2
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: SoManager
+  name: access_etudiant
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "watch", "list"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: SoManager 
+  name: access_prof
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: SoManager
+  name: namespace_admin
+rules:
+- apiGroups: [""]
+  resources: [""]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---  
+## Projet capture the flag de I3
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: capture_the_flag
+  name: access_etudiant
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "watch", "list"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: capture_the_flag 
+  name: access_prof
+rules:
+- apiGroups: [""]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: capture_the_flag
+  name: namespace_admin
+rules:
+- apiGroups: [""]
+  resources: [""]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---  
