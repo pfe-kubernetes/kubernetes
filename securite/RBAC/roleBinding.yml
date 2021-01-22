@@ -10,7 +10,7 @@ subjects:
   name: eseo:I1
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: access-cours-etudiant
   apiGroup: rbac.authorization.k8s.io
 ---
@@ -24,7 +24,7 @@ subjects:
   name: eseo:jerome.chavin@eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: access-cours-prof
   apiGroup: rbac.authorization.k8s.io
 ---
@@ -38,7 +38,7 @@ subjects:
   name: eseo:jonathan.illias@eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: namespace-admin
   apiGroup: rbac.authorization.k8s.io
 ---
@@ -54,7 +54,7 @@ subjects:
   name: eseo:CSS
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: access-cours-etudiant
   apiGroup: rbac.authorization.k8s.io
 ---
@@ -68,7 +68,7 @@ subjects:
   name: eseo:francois.jamet@eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: access-cours-prof
   apiGroup: rbac.authorization.k8s.io
 ---
@@ -84,6 +84,6 @@ subjects:
 - kind: User
   name: eseo:jerome.chavin@eseo.fr  
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: namespace-admin
   apiGroup: rbac.authorization.k8s.io

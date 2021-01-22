@@ -1,8 +1,39 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: accessClusterReader
+  name: access-cluster-reader
 rules:
 - apiGroups: ["*"]
   resources: ["*.*"]
   verbs: ["get", "watch", "list"]
+---
+## Role pour les etudiants sur les cours
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: access-cours-etudiant
+rules:
+- apiGroups: ["*"]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "watch", "list"]
+---
+## Role pour les professseurs donnant le cours
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: 
+  name: access-cours-prof
+rules:
+- apiGroups: ["*"]
+  resources: ["deployments","pods","configmaps","services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+## Role pour les administrateurs des cours
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: namespace-admin
+rules:
+- apiGroups: ["*"]
+  resources: ["*.*"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---  
