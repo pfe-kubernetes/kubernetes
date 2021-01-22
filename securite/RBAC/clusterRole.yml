@@ -3,6 +3,6 @@ kind: ClusterRole
 metadata:
   name: accessClusterReader
 rules:
-- apiGroups: [""]
-  resources: [""]
+- apiGroups: ["*"]
+  resources: ["*.*"]
   verbs: ["get", "watch", "list"]
