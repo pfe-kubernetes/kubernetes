@@ -322,3 +322,6 @@
 
     - name: Ajout de Falco
       shell: helm install falco falcosecurity/falco -n falco -f /manifests/falco-values.yaml
+
+    - name: Ajout de Falco Exporter
+      shell: helm install falco-exporter falcosecurity/falco-exporter -n falco
