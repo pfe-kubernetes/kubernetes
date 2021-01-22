@@ -250,6 +250,13 @@
     - name: Vérification OpenEBS
       shell: kubectl get pods -n openebs
 
+    - name: Reboot de l'admission controller
+      shell: kubectl get pods -n openebs -l openebs.io/component-name=cstor-admission-webhook -o name | xargs kubectl delete -n openebs
+
+    - name: Petite pause après pour la création des blockDevices...
+      pause:
+        seconds: "40"
+
     - name: Récupération des blockdevices disponibles
       block:
         - name: Récupération des blockdevices disponibles 1
@@ -259,6 +266,10 @@
         - name: Récupération des blockdevices disponibles 2
           shell: kubectl get bd -n openebs --no-headers -o custom-columns=:metadata.name
           register: blockdevices
+
+    - name: Récupération des nodes de chaque blockdevice disponibles
+      shell: kubectl get bd -n openebs --no-headers -o custom-columns=:spec.nodeAttributes.nodeName
+      register: blockdevices-nodes
 
     - name: Création manifests OpenEBS
       template:
@@ -272,9 +283,9 @@
     - name: Création du pool cStor OpenEBS
       shell: kubectl apply -f /manifests/openebs-cstor.yaml
 
-    - name: Petite pause pour la création de la cStor pool...
+    - name: Pause pour la création de la cStor pool...
       pause:
-        seconds: "40"
+        seconds: "150"
 
     - name: Création de la StorageClass OpenEBS
       shell: kubectl apply -f /manifests/openebs-storageclass.yaml
