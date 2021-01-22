@@ -4515,13 +4515,8 @@ data:
       - key: path-filter
         name: path filter
         state: true
-        include: ""
+        include: "/dev/sdc"
         exclude: "/dev/loop,/dev/fd0,/dev/sr0,/dev/ram,/dev/dm-,/dev/md,/dev/rbd,/dev/zd"
-      - key: patate-filter
-        name: patate filter
-        state: true
-        include: ""
-        exclude: "/dev/sdb"
 ---
 apiVersion: apps/v1
 kind: DaemonSet
