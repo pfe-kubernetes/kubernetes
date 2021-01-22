@@ -1,0 +1,15 @@
+---
+apiVersion: cstor.openebs.io/v1
+kind: CStorPoolCluster
+metadata:
+  name: cspc-stripe
+  namespace: openebs
+spec:
+  pools:
+    - dataRaidGroups:
+      - blockDevices:
+          {% for bd in hostvars[groups['masters'][0]].blockdevices.stdout_lines %}
+          - blockDeviceName: {{ bd }}
+          {% endfor %}
+      poolConfig:
+        dataRaidGroupType: "stripe"

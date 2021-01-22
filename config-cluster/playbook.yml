@@ -112,6 +112,9 @@
         state: started
         enabled: yes
 
+    - name: modprobe pour iSCSI
+      shell: modprobe iscsi_tcp && echo iscsi_tcp >/etc/modules-load.d/iscsi-tcp.conf
+
     - name: Relancer les règles de sysctl.conf
       command: sysctl --system
 
@@ -231,8 +234,11 @@
       shell: helm install cilium cilium/cilium --namespace {{ cilium.namespace }} --set ipam.mode={{ cilium.ipam }} --set prometheus.enable={{ cilium.agentMetrics }} --set operator.prometheus.enable={{ cilium.operatorMetrics }}
 
     # OpenEBS
+    # - name: Installation OpenEBS
+    #   shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdc"
+
     - name: Installation OpenEBS
-      shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdc"
+      shell: kubectl apply -f https://openebs.github.io/charts/cstor-operator.yaml
 
     - name: Vérification nodes
       shell: kubectl get nodes
@@ -240,6 +246,9 @@
     - name: Petite pause après pour la création des blockDevices...
       pause:
         seconds: "120"
+
+    - name: Vérification OpenEBS
+      shell: kubectl get pods -n openebs
 
     - name: Récupération des blockdevices disponibles
       block:
@@ -253,13 +262,22 @@
 
     - name: Création manifests OpenEBS
       template:
-        src: templates/openebs.yaml
-        dest: /manifests/openebs.yaml
+        src: "{{ item }}"
+        dest: /manifests/
         group: root
         mode: "0644"
+      with_fileglob:
+        - "./templates/openebs*.yaml"
 
-    - name: Ajout des manifests OpenEBS
-      shell: kubectl apply -f /manifests/openebs.yaml
+    - name: Création du pool cStor OpenEBS
+      shell: kubectl apply -f /manifests/openebs-cstor.yaml
+
+    - name: Petite pause pour la création de la cStor pool...
+      pause:
+        seconds: "40"
+
+    - name: Création de la StorageClass OpenEBS
+      shell: kubectl apply -f /manifests/openebs-storageclass.yaml
 
     # Monitoring (Prometheus / Grafana / Loki)
     - name: Création manifests Monitoring
