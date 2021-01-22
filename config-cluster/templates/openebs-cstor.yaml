@@ -8,7 +8,7 @@ spec:
   pools:
 {% for bd in hostvars[groups['masters'][0]].blockdevices.stdout_lines %}
     - nodeSelector:
-        kubernetes.io/hostname: {{ hostvars[groups['masters'][0]].blockdevices-nodes.stdout_lines[loop.index0] }}
+        kubernetes.io/hostname: {{ hostvars[groups['masters'][0]].blockdevicesNodes.stdout_lines[loop.index0] }}
       dataRaidGroups:
       - blockDevices:
           - blockDeviceName: {{ bd }}

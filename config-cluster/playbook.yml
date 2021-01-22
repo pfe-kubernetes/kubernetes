@@ -269,7 +269,7 @@
 
     - name: Récupération des nodes de chaque blockdevice disponibles
       shell: kubectl get bd -n openebs --no-headers -o custom-columns=:spec.nodeAttributes.nodeName
-      register: blockdevices-nodes
+      register: blockdevicesNodes
 
     - name: Création manifests OpenEBS
       template:
