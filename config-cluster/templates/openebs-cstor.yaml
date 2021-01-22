@@ -8,8 +8,8 @@ spec:
   pools:
     - dataRaidGroups:
       - blockDevices:
-          {% for bd in hostvars[groups['masters'][0]].blockdevices.stdout_lines %}
+{% for bd in hostvars[groups['masters'][0]].blockdevices.stdout_lines %}
           - blockDeviceName: {{ bd }}
-          {% endfor %}
+{% endfor %}
       poolConfig:
         dataRaidGroupType: "stripe"
