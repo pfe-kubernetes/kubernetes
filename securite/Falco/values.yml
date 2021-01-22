@@ -304,15 +304,6 @@ customRules:
       output: "Shell spawned in a container other than entrypoint (user=%user.name container_id=%container.id container_name=%container.name shell=%proc.name parent=%proc.pname cmdline=%proc.cmdline)"
       priority: WARNING
 
-  rules-clusterRole.yaml: |-
-    – rule: System ClusterRole Modified/Deleted
-      desc: Detect any attempt to modify/delete a ClusterRole/Role starting with system
-      condition: kevt and (role or clusterrole) and (kmodify or kdelete) and (ka.target.name startswith “system:”) and ka.target.name!=”system:coredns”
-      output: "System ClusterRole/Role modified or deleted (user=%ka.user.name role=%ka.target.name ns=%ka.target.namespace action=%ka.verb)"
-      priority: WARNING
-      source: k8s_audit
-      tags: [k8s]
-
 # certificates used by webserver and grpc server
 # paste certificate content or use helm with --set-file
 certs:
