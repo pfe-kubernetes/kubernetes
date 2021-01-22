@@ -33,11 +33,11 @@ rules:
   resources: [""]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ---  
-## Cours dinfrastructure VmWare de I3
+## Cours dinfrastructure vmware de I3
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructure-VmWare
+  namespace: infrastructure-vmware
   name: access-cours-etudiant
 rules:
 - apiGroups: [""]
@@ -48,7 +48,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructure-VmWare 
+  namespace: infrastructure-vmware 
   name: access-cours-prof
 rules:
 - apiGroups: [""]
@@ -59,7 +59,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: infrastructure-VmWare
+  namespace: infrastructure-vmware
   name: namespace-admin
 rules:
 - apiGroups: [""]
@@ -103,7 +103,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: SoManager
+  namespace: somanager
   name: access-etudiant
 rules:
 - apiGroups: [""]
@@ -114,7 +114,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: SoManager 
+  namespace: somanager 
   name: access-prof
 rules:
 - apiGroups: [""]
@@ -125,7 +125,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: SoManager
+  namespace: somanager
   name: namespace-admin
 rules:
 - apiGroups: [""]

@@ -43,12 +43,12 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ---
 
-## RoleBinding pour le cours d'infrastructure VmWare de I3 donné par monsieur Jamet et administre par monsieur chavin et illias-pillet
+## RoleBinding pour le cours d'infrastructure vmware de I3 donné par monsieur Jamet et administre par monsieur chavin et illias-pillet
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: access-cours-VmWare-etu
-  namespace: infrastructure-VmWare
+  name: access-cours-vmware-etu
+  namespace: infrastructure-vmware
 subjects:
 - kind: Group
   name: eseo:CSS
@@ -61,8 +61,8 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: access-cours-VmWare-prof
-  namespace: infrastructure-VmWare
+  name: access-cours-vmware-prof
+  namespace: infrastructure-vmware
 subjects:
 - kind: User
   name: eseo:francois.jamet@eseo.fr
@@ -75,8 +75,8 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: admin-VmWare
-  namespace: infrastructure-VmWare
+  name: admin-vmware
+  namespace: infrastructure-vmware
 subjects:
 - kind: User
   name: eseo:jonathan.illias@eseo.fr
