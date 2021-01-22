@@ -1,41 +1,89 @@
+
+## RoleBinding pour le cours d'infrastructures et reseau de I1, supervisé par monsieur chavin et administre par monsieur illias pillet
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: namespace-etudiant
-  namespace: secu-test
+  name: access-cours-infra-etu
+  namespace: infrastructures-et-reseau
 subjects:
-- kind: User
-  name: eseo:alexis.fredouillard@reseau.eseo.fr
+- kind: Group
+  name: eseo:I1
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: namespace-reader
+  name: access-cours-etudiant
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: namespace-prof
-  namespace: secu-test
+  name: access-cours-infra-prof
+  namespace: infrastructures-et-reseau
 subjects:
 - kind: User
-  name: eseo:caroline.postec@reseau.eseo.fr
+  name: eseo:jerome.chavin@eseo.fr
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: namespace-create
+  name: access-cours-prof
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
+  name: admin-infra
+  namespace: infrastructures-et-reseau
+subjects:
+- kind: User
+  name: eseo:jonathan.illias@eseo.fr
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
   name: namespace-admin
-  namespace: secu-test
+  apiGroup: rbac.authorization.k8s.io
+---
+
+## RoleBinding pour le cours d'infrastructure vmware de I3 donné par monsieur Jamet et administre par monsieur chavin et illias-pillet
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: access-cours-vmware-etu
+  namespace: infrastructure-vmware
 subjects:
-- kind: User
-  name: eseo:marion.plassais@reseau.eseo.fr
+- kind: Group
+  name: eseo:CSS
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: namespace-admin-all
+  name: access-cours-etudiant
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: access-cours-vmware-prof
+  namespace: infrastructure-vmware
+subjects:
+- kind: User
+  name: eseo:francois.jamet@eseo.fr
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: access-cours-prof
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: admin-vmware
+  namespace: infrastructure-vmware
+subjects:
+- kind: User
+  name: eseo:jonathan.illias@eseo.fr
+  apiGroup: rbac.authorization.k8s.io
+- kind: User
+  name: eseo:jerome.chavin@eseo.fr  
+roleRef:
+  kind: Role
+  name: namespace-admin
   apiGroup: rbac.authorization.k8s.io

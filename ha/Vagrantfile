@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    # Machine Routage
+    config.vm.define "haproxy1" do |machine|
+        machine.vm.hostname = "haproxy1"
+        # Box de base (agent de supervision, tests, sécurité, ...)
+        machine.vm.box = "ubuntu/focal64"
+        # Désactive la synchronisation rsync
+        machine.vm.synced_folder '.', '/vagrant', disabled: true
+        machine.vm.network :public_network, bridge: "eno1", ip: "192.168.4.243", netmask: "255.255.255.0"
+        machine.disksize.size = '8GB'
+        machine.vm.provider :virtualbox do |v|
+            v.customize ["modifyvm", :id, "--name", "haproxy1"]
+            v.customize ["modifyvm", :id, "--groups", "/pfe-kubernetes"]
+            v.customize ["modifyvm", :id, "--cpus", "1"]
+            v.customize ["modifyvm", :id, "--memory", 1024]
+        end
+
+        machine.vm.provision "file", source: "provisioning/netplan.yaml", destination: "/tmp/51-kubernetes.yaml"
+        machine.vm.provision "shell", inline: <<-SHELL
+            mv /tmp/51-kubernetes.yaml /etc/netplan/51-kubernetes.yaml
+            netplan apply   
+            sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+            sleep 3
+            service ssh restart
+            useradd k8s --home /home/k8s/ --create-home --groups sudo --shell /bin/bash
+            echo -e "network\nnetwork\n" | passwd k8s
+        SHELL
+    end
+end
