@@ -238,13 +238,12 @@
     #   shell: helm install openebs openebs/openebs --namespace openebs --set ndm.filters.includePaths="/dev/sdc"
 
     - name: Création manifests OpenEBS
-      template:
-        src: "{{ item }}"
+      copy:
+        src: templates/openebs.yaml
         dest: /manifests/
+        owner: root
         group: root
         mode: "0644"
-      with_fileglob:
-        - "./templates/openebs*.yaml"
 
     - name: Installation OpenEBS
       shell: kubectl apply -f /manifests/openebs.yaml
@@ -279,6 +278,15 @@
     - name: Récupération des nodes de chaque blockdevice disponibles
       shell: kubectl get bd -n openebs --no-headers -o custom-columns=:spec.nodeAttributes.nodeName
       register: blockdevicesNodes
+
+    - name: Création manifests OpenEBS
+      template:
+        src: "{{ item }}"
+        dest: /manifests/
+        group: root
+        mode: "0644"
+      with_fileglob:
+        - "./templates/openebs-*.yaml"
 
     - name: Création du pool cStor OpenEBS
       shell: kubectl apply -f /manifests/openebs-cstor.yaml
