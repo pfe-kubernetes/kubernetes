@@ -295,18 +295,14 @@
       pause:
         seconds: "150"
 
-    - name: Création de la StorageClass OpenEBS
+    - name: Creation de la StorageClass OpenEBS
       shell: kubectl apply -f /manifests/openebs-storageclass.yaml
 
     # Monitoring (Prometheus / Grafana / Loki)
-    - name: Création manifests Monitoring
-      template:
-        src: "{{ item }}"
-        dest: /manifests/
-        group: root
-        mode: "0644"
-      with_fileglob:
-        - "../monitoring"
+    - name: Creation manifests Monitoring
+      copy:
+        src: ../monitoring
+        dest: /manifests
 
     - name: Ajout des manifests Monitoring
       shell: kubectl apply -R -f /manifests/monitoring
