@@ -7,7 +7,7 @@ subjects:
   name: eseo:professeur
   apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: clusterRole
+  kind: ClusterRole
   name: accessClusterReader
   apiGroup: rbac.authorization.k8s.io
 ---
