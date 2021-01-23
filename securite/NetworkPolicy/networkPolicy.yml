@@ -16,23 +16,23 @@ spec:
             app: prometheus
 
 ---
-## Le trafic au sein du namespace "projet" est limité à ce namespace et à l'accès au DNS et à l'accès de prometheus
+## Le trafic au sein du namespace "somanager" est limité à ce namespace et à l'accès au DNS et à l'accès de prometheus
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
   name: "allow-within-namespace"
-  namespace: projet
+  namespace: somanager
 specs:
   - endpointSelector:
       matchLabels: {} 
     egress:
     - toEndpoints:
       - matchLabels:
-          "k8s:io.kubernetes.pod.namespace": projet
+          "k8s:io.kubernetes.pod.namespace": somanager
     ingress:
     - fromEndpoints:
       - matchLabels:
-          "k8s:io.kubernetes.pod.namespace": projet
+          "k8s:io.kubernetes.pod.namespace": somanager
   - endpointSelector:
       matchLabels: {} 
     egress:
@@ -76,7 +76,7 @@ spec:
           tire: frontend
     ports:
     - port: "3306"
-    protocol: "TCP"
+      protocol: "TCP"
 
 ---
 ## Autoraisation de la connexion au serveur web sur le port 80 et autorisation de connexion à la db
@@ -96,7 +96,7 @@ spec:
   - from:
     ports:
     - port: "8080"
-    protocol: "TCP"
+      protocol: "TCP"
   egress:
   - to: 
     - podSelector:
@@ -104,4 +104,4 @@ spec:
           tire: db
     ports:
     - port: "3306"
-    protocol: "TCP"
+      protocol: "TCP"
