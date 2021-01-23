@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/name: node-exporter
+    role: exporter
   name: node-exporter
   namespace: monitoring
 spec:

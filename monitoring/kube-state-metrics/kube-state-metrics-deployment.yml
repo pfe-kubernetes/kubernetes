@@ -10,10 +10,12 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: kube-state-metrics
+      role: exporter
   template:
     metadata:
       labels:
         app.kubernetes.io/name: kube-state-metrics
+        role: exporter
     spec:
       containers:
       - image: quay.io/coreos/kube-state-metrics:v2.0.0-beta
