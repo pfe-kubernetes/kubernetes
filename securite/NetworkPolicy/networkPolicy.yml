@@ -66,14 +66,14 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      tire: mysql
+      tier: mysql
   policyTypes:
   - Ingress
   ingress:
   - from:
     - podSelector:
         matchLabels:
-          tire: frontend
+          tier: frontend
     ports:
     - port: 3306
       protocol: "TCP"
@@ -101,7 +101,7 @@ spec:
   - to: 
     - podSelector:
         matchLabels:
-          tire: db
+          tier: db
     ports:
     - port: 3306
       protocol: "TCP"
