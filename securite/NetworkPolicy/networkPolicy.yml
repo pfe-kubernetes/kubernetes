@@ -75,7 +75,7 @@ spec:
         matchLabels:
           tire: frontend
     ports:
-    - port: "3306"
+    - port: 3306
       protocol: "TCP"
 
 ---
@@ -95,7 +95,7 @@ spec:
   ingress:
   - from:
     ports:
-    - port: "8080"
+    - port: 8080
       protocol: "TCP"
   egress:
   - to: 
@@ -103,5 +103,5 @@ spec:
         matchLabels:
           tire: db
     ports:
-    - port: "3306"
+    - port: 3306
       protocol: "TCP"
